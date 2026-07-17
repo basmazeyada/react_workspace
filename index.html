@@ -1348,7 +1348,33 @@
 
               {/* Interactive Main Playground Frame Split */}
               <main className="flex-grow flex min-w-0 bg-[#0f172a] overflow-hidden">
-                {/* Left Side: Code Viewer & Copy Interface */}
+                {/* Left Side: Live Playground */}
+                <section className="flex-1 border-r border-slate-900 p-8 flex flex-col overflow-y-auto">
+                  <div className="mb-6">
+                    <span className="text-[10px] font-bold tracking-widest text-indigo-400 font-mono uppercase bg-indigo-500/10 border border-indigo-500/10 px-2.5 py-1 rounded-full">
+                      {activeMod.session} • Concept Module
+                    </span>
+                    <h2 className="text-xl font-bold text-white mt-3 flex items-center gap-2">
+                      <i
+                        className={`fa-solid ${activeMod.icon} text-slate-400`}
+                      ></i>
+                      {activeMod.title}
+                    </h2>
+                    <p className="text-xs text-slate-400 mt-1">
+                      Simulate component behavior in real-time inside this
+                      rendering container.
+                    </p>
+                  </div>
+
+                  {/* Active Component Inject Loop */}
+                  <div className="flex-grow flex items-center justify-center bg-[#070a13] rounded-2xl border border-slate-800 p-8 shadow-inner min-h-[350px]">
+                    <div className="w-full max-w-md">
+                      {renderDemoComponent()}
+                    </div>
+                  </div>
+                </section>
+
+                {/* Right Side: Code Viewer & Copy Interface */}
                 <section className="w-[60%] shrink-0 bg-[#070a13] flex flex-col h-full overflow-hidden">
                   <div className="p-4 border-b border-slate-900 bg-slate-950/80 flex justify-between items-center shrink-0">
                     <div className="flex items-center gap-2">
@@ -1380,32 +1406,6 @@
                         {codeTemplates[selectedModule]}
                       </code>
                     </pre>
-                  </div>
-                </section>
-
-                {/* Right Side: Live Playground */}
-                <section className="flex-1 border-r border-slate-900 p-8 flex flex-col overflow-y-auto">
-                  <div className="mb-6">
-                    <span className="text-[10px] font-bold tracking-widest text-indigo-400 font-mono uppercase bg-indigo-500/10 border border-indigo-500/10 px-2.5 py-1 rounded-full">
-                      {activeMod.session} • Concept Module
-                    </span>
-                    <h2 className="text-xl font-bold text-white mt-3 flex items-center gap-2">
-                      <i
-                        className={`fa-solid ${activeMod.icon} text-slate-400`}
-                      ></i>
-                      {activeMod.title}
-                    </h2>
-                    <p className="text-xs text-slate-400 mt-1">
-                      Simulate component behavior in real-time inside this
-                      rendering container.
-                    </p>
-                  </div>
-
-                  {/* Active Component Inject Loop */}
-                  <div className="flex-grow flex items-center justify-center bg-[#070a13] rounded-2xl border border-slate-800 p-8 shadow-inner min-h-[350px]">
-                    <div className="w-full max-w-md">
-                      {renderDemoComponent()}
-                    </div>
                   </div>
                 </section>
               </main>
