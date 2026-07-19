@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=JetBrains+Mono:wght@400;700&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -35,10 +36,37 @@
             }
         }
     </script>
+    
     <style>
+        /* Force minimum font sizes for accessibility and presentation display scales */
+        .readable-text {
+            font-size: 18px !important;
+            line-height: 1.75 !important;
+        }
+        .readable-code {
+            font-size: 16px !important;
+            line-height: 1.65 !important;
+        }
+        .readable-list-item {
+            font-size: 17px !important;
+            line-height: 1.7 !important;
+        }
+        .readable-header-lg {
+            font-size: 38px !important;
+            line-height: 1.25 !important;
+        }
+        .readable-header-md {
+            font-size: 24px !important;
+            line-height: 1.35 !important;
+        }
+        .readable-btn-text {
+            font-size: 15px !important;
+        }
+        
+        /* Interactive styling details */
         ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
+            width: 8px;
+            height: 8px;
         }
         ::-webkit-scrollbar-track {
             background: #040711;
@@ -57,83 +85,83 @@
         }
     </style>
 </head>
-<body class="bg-brand-bg text-slate-100 font-sans min-h-screen overflow-hidden flex">
+<body class="bg-brand-bg text-slate-100 font-sans min-h-screen flex">
 
-    <!-- Slide Selection Sidebar -->
     <aside class="w-80 bg-brand-slide border-r border-brand-border flex flex-col justify-between shrink-0 z-20">
-        <div class="p-6 border-b border-brand-border">
+        <div class="py-2.5 px-6 border-b border-brand-border">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 bg-brand-indigo rounded-xl flex items-center justify-center text-white shadow-lg shadow-brand-indigo/30">
                     <i class="fa-brands fa-react text-2xl animate-spin" style="animation-duration: 10s;"></i>
                 </div>
                 <div>
                     <h1 class="text-sm font-bold text-white tracking-wide">React Masterclass</h1>
-                    <span class="text-[10px] text-brand-cyan uppercase tracking-widest font-mono font-bold">Slide Deck Console</span>
+                    <span class="text-[10px] text-brand-cyan uppercase tracking-widest font-mono font-bold">Presenter Panel</span>
                 </div>
             </div>
         </div>
 
-        <!-- Navigation list -->
-        <nav class="flex-1 overflow-y-auto p-4 space-y-1.5 custom-scrollbar" id="sidebar-nav">
-            <!-- Navigation links injected dynamically -->
+        <!-- Sidebar Navigation List -->
+        <nav class="flex-1 overflow-y-auto p-4 space-y-2 custom-scrollbar" id="sidebar-nav">
+            <!-- Sidebar dynamic lists injected via javascript -->
         </nav>
 
-        <!-- Sidebar footer controls -->
-        <div class="p-4 border-t border-brand-border bg-brand-bg/50 flex items-center justify-between gap-2">
-            <button onclick="prevSlide()" class="flex-1 py-2 px-3 bg-brand-card hover:bg-brand-border text-xs font-semibold rounded-lg transition flex items-center justify-center gap-2">
-                <i class="fa-solid fa-arrow-left"></i> Prev
-            </button>
-            <span id="slide-fraction" class="text-xs font-mono font-bold text-slate-400 px-2">1 / 14</span>
-            <button onclick="nextSlide()" class="flex-1 py-2 px-3 bg-brand-indigo hover:bg-indigo-500 text-white text-xs font-semibold rounded-lg transition flex items-center justify-center gap-2">
-                Next <i class="fa-solid fa-arrow-right"></i>
-            </button>
+        <div class="p-4 border-t border-brand-border bg-brand-bg/50 flex flex-col gap-3">
+            <div class="flex items-center justify-between gap-2">
+                <button onclick="prevSlide()" class="flex-1 p-2 bg-brand-card hover:bg-brand-border text-white rounded-lg transition flex items-center justify-center gap-2 readable-btn-text font-semibold border border-brand-border">
+                    <i class="fa-solid fa-arrow-left"></i> Prev
+                </button>
+                <button onclick="nextSlide()" class="flex-1 p-2 bg-brand-indigo hover:bg-indigo-500 text-white rounded-lg transition flex items-center justify-center gap-2 readable-btn-text font-semibold">
+                    Next <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+            <div class="text-center font-mono font-bold text-slate-400 text-sm py-1 bg-brand-code/60 rounded-md border border-brand-border/30" id="slide-fraction">
+                1 / 15
+            </div>
         </div>
     </aside>
 
-    <!-- Main Presentation Viewport -->
     <main class="flex-1 relative flex flex-col min-w-0 bg-brand-bg">
         
         <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-indigo/5 rounded-full blur-[120px] pointer-events-none"></div>
         <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-brand-cyan/5 rounded-full blur-[120px] pointer-events-none"></div>
 
-        <!-- Top presentation context status bar -->
-        <header class="h-16 border-b border-brand-border px-8 flex items-center justify-between z-10 shrink-0">
-            <span id="slide-category-badge" class="text-[10px] font-mono uppercase tracking-widest font-bold bg-brand-indigo/15 text-brand-indigo px-3 py-1 rounded-full">
+        <!-- Top presentation contextual header -->
+        <header class="h-16 border-b border-brand-border px-8 flex items-center justify-between z-10 shrink-0 bg-brand-bg/75 backdrop-blur-md">
+            <span id="slide-category-badge" class="text-xs font-mono uppercase tracking-widest font-bold bg-brand-indigo/15 text-brand-indigo px-4 py-1.5 rounded-full border border-brand-indigo/20">
                 PART 1: THINKING IN REACT
             </span>
-            <div class="flex items-center gap-4 text-xs text-slate-400">
-                <span>Presenter Mode</span>
-                <div class="w-2 h-2 bg-brand-emerald rounded-full animate-pulse"></div>
+            <div class="flex items-center gap-4 text-sm text-slate-400 font-mono">
+                <span>Presenter Engine Active</span>
+                <div class="w-3 h-3 bg-brand-emerald rounded-full animate-pulse"></div>
             </div>
         </header>
 
-        <!-- Slide Area -->
         <div class="flex-1 overflow-y-auto p-8 flex items-center justify-center relative">
             <div id="slides-container" class="w-full max-w-6xl">
                 
                 <!-- Slide 1: Welcome Slide -->
                 <div class="slide-element hidden" id="slide-1">
-                    <div class="text-center space-y-6 py-12">
-                        <span class="inline-block px-4 py-1.5 bg-brand-indigo/10 border border-brand-indigo/20 text-brand-indigo text-xs font-bold rounded-full uppercase tracking-widest">
-                            Exclusive Developer Workshop
+                    <div class="text-center space-y-8 py-8">
+                        <span class="inline-block px-4 py-1.5 bg-brand-indigo/10 border border-brand-indigo/20 text-brand-indigo text-sm font-bold rounded-full uppercase tracking-widest">
+                            Enterprise Engineering Core
                         </span>
-                        <h1 class="text-6xl font-extrabold tracking-tight text-white leading-tight">
+                        <h1 class="text-5xl md:text-6xl font-extrabold tracking-tight text-white leading-tight">
                             React to Production Masterclass
                         </h1>
-                        <p class="text-xl text-slate-400 max-w-2xl mx-auto">
-                            Mastering the mechanics, form design, networking guards, and enterprise architectures of scalable SPAs.
+                        <p class="text-xl text-slate-400 max-w-3xl mx-auto readable-text">
+                            Deep dive into unidirectional data flows, reference mutation audits, resilient network controllers, atomic layout patterns, and modern project modularization.
                         </p>
                         
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto pt-10 text-left">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto pt-6 text-left">
                             <div class="p-6 bg-brand-card/60 border border-brand-border rounded-2xl">
-                                <span class="text-[10px] text-brand-cyan uppercase tracking-widest font-bold font-mono">Segment 01</span>
-                                <h3 class="text-lg font-bold text-white mt-1 mb-2">Thinking in React</h3>
-                                <p class="text-slate-400 text-xs leading-relaxed">Structural DOM updates, immutability benchmarks, custom unified forms, and dynamic calculated validations.</p>
+                                <span class="text-xs text-brand-cyan uppercase tracking-widest font-bold font-mono">Part 1</span>
+                                <h3 class="readable-header-md font-bold text-white mt-1 mb-2">Thinking in React</h3>
+                                <p class="text-slate-400 readable-text">Mental models of declarative rendering, diffing loops, memory references, and fully controlled visual inputs.</p>
                             </div>
                             <div class="p-6 bg-brand-card/60 border border-brand-border rounded-2xl">
-                                <span class="text-[10px] text-brand-cyan uppercase tracking-widest font-bold font-mono">Segment 02</span>
-                                <h3 class="text-lg font-bold text-white mt-1 mb-2">React in Practice</h3>
-                                <p class="text-slate-400 text-xs leading-relaxed">Synchronization models, request abort control shields, modular context boundaries, and HTML5 SPA client-side routing.</p>
+                                <span class="text-xs text-brand-cyan uppercase tracking-widest font-bold font-mono">Part 2</span>
+                                <h3 class="readable-header-md font-bold text-white mt-1 mb-2">React in Practice</h3>
+                                <p class="text-slate-400 readable-text">Network synchronization gateways, race condition defenses, modular contexts, and single-page routing structures.</p>
                             </div>
                         </div>
                     </div>
@@ -141,48 +169,48 @@
 
                 <!-- Slide 2: Interactive Curriculum Map -->
                 <div class="slide-element hidden" id="slide-2">
-                    <h2 class="text-3xl font-extrabold text-white mb-6 flex items-center gap-3">
-                        <i class="fa-solid fa-map-location-dot text-brand-indigo"></i> Masterclass Curriculum Stations
+                    <h2 class="readable-header-lg font-extrabold text-white mb-6 flex items-center gap-4">
+                        <i class="fa-solid fa-map-location-dot text-brand-indigo"></i> Core Training Stations
                     </h2>
-                    <p class="text-slate-400 text-sm mb-8 leading-relaxed">
-                        A full overview of our high-speed technical trajectory. Each station represents a structural pillar of a production-level React application.
+                    <p class="text-slate-400 readable-text mb-8">
+                        Our technical progression targets major production challenges. Every module breaks down common bugs and shows the correct engineering design pattern.
                     </p>
 
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <div class="p-5 bg-brand-card border-t-4 border-brand-indigo rounded-xl border-x border-b border-brand-border space-y-3">
-                            <span class="text-[10px] font-mono font-bold text-slate-500 uppercase">Station 01</span>
-                            <h3 class="font-bold text-white">Anatomy of UI & VDOM</h3>
-                            <ul class="text-xs text-slate-400 space-y-1.5 list-disc pl-4 leading-normal">
-                                <li>Babel JSX Compilation</li>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="p-6 bg-brand-card border-t-4 border-brand-indigo rounded-xl border-x border-b border-brand-border space-y-4">
+                            <span class="text-xs font-mono font-bold text-slate-500 uppercase">Station 01</span>
+                            <h3 class="readable-header-md font-bold text-white">Anatomy & VDOM</h3>
+                            <ul class="text-slate-350 space-y-2 list-disc pl-5 readable-list-item">
+                                <li>JSX Compilation</li>
                                 <li>createElement internals</li>
-                                <li>Virtual DOM diffing algorithms</li>
+                                <li>Diffing algorithms</li>
                             </ul>
                         </div>
-                        <div class="p-5 bg-brand-card border-t-4 border-brand-cyan rounded-xl border-x border-b border-brand-border space-y-3">
-                            <span class="text-[10px] font-mono font-bold text-slate-500 uppercase">Station 02</span>
-                            <h3 class="font-bold text-white">Advanced Forms</h3>
-                            <ul class="text-xs text-slate-400 space-y-1.5 list-disc pl-4 leading-normal">
+                        <div class="p-6 bg-brand-card border-t-4 border-brand-cyan rounded-xl border-x border-b border-brand-border space-y-4">
+                            <span class="text-xs font-mono font-bold text-slate-500 uppercase">Station 02</span>
+                            <h3 class="readable-header-md font-bold text-white">Controlled Forms</h3>
+                            <ul class="text-slate-350 space-y-2 list-disc pl-5 readable-list-item">
                                 <li>Controlled vs Uncontrolled</li>
-                                <li>Unified Object Scaling</li>
+                                <li>Unified state scaling</li>
                                 <li>Computed validation loops</li>
                             </ul>
                         </div>
-                        <div class="p-5 bg-brand-card border-t-4 border-brand-emerald rounded-xl border-x border-b border-brand-border space-y-3">
-                            <span class="text-[10px] font-mono font-bold text-slate-500 uppercase">Station 03</span>
-                            <h3 class="font-bold text-white">Network & Sync</h3>
-                            <ul class="text-xs text-slate-400 space-y-1.5 list-disc pl-4 leading-normal">
-                                <li>useEffect sync mechanics</li>
-                                <li>AbortController race guards</li>
-                                <li>API lifecycle states</li>
+                        <div class="p-6 bg-brand-card border-t-4 border-brand-emerald rounded-xl border-x border-b border-brand-border space-y-4">
+                            <span class="text-xs font-mono font-bold text-slate-500 uppercase">Station 03</span>
+                            <h3 class="readable-header-md font-bold text-white">Side Effects & API</h3>
+                            <ul class="text-slate-350 space-y-2 list-disc pl-5 readable-list-item">
+                                <li>useEffect sync models</li>
+                                <li>AbortController race shields</li>
+                                <li>Loading & Error boundaries</li>
                             </ul>
                         </div>
-                        <div class="p-5 bg-brand-card border-t-4 border-brand-amber rounded-xl border-x border-b border-brand-border space-y-3">
-                            <span class="text-[10px] font-mono font-bold text-slate-500 uppercase">Station 04</span>
-                            <h3 class="font-bold text-white">Architecture</h3>
-                            <ul class="text-xs text-slate-400 space-y-1.5 list-disc pl-4 leading-normal">
+                        <div class="p-6 bg-brand-card border-t-4 border-brand-amber rounded-xl border-x border-b border-brand-border space-y-4">
+                            <span class="text-xs font-mono font-bold text-slate-500 uppercase">Station 04</span>
+                            <h3 class="readable-header-md font-bold text-white">Scale Architecture</h3>
+                            <ul class="text-slate-350 space-y-2 list-disc pl-5 readable-list-item">
                                 <li>Context render bounds</li>
-                                <li>HTML5 SPA Navigation Routing</li>
-                                <li>Feature Colocation Scaffolding</li>
+                                <li>History API Client routing</li>
+                                <li>Feature colocation scaffolding</li>
                             </ul>
                         </div>
                     </div>
@@ -190,38 +218,34 @@
 
                 <!-- Slide 3: Anatomy of UI -->
                 <div class="slide-element hidden" id="slide-3">
-                    <h2 class="text-3xl font-extrabold text-white mb-6 flex items-center gap-3">
+                    <h2 class="readable-header-lg font-extrabold text-white mb-6 flex items-center gap-4">
                         <i class="fa-solid fa-cube text-brand-indigo"></i> UI Anatomy & JSX Compilation
                     </h2>
                     
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <div class="space-y-4 text-sm text-slate-300">
-                            <p class="leading-relaxed">
-                                JSX is not HTML. It is an ergonomic developer wrapper that compiles down to standard JavaScript objects representing the Virtual DOM tree.
+                        <div class="space-y-6 text-slate-300">
+                            <p class="readable-text">
+                                JSX is a syntactic layer designed for readability. Under the hood, transpilers compile your custom components down to plain nesting structures of standard JavaScript objects.
                             </p>
-                            <ul class="space-y-3 pl-1">
-                                <li class="flex items-start gap-3">
-                                    <i class="fa-solid fa-code text-brand-cyan mt-1"></i>
-                                    <span><strong>The Compilation Flow:</strong> Transpilers (like Babel/Esbuild) compile JSX tags down into nested <code class="text-brand-cyan font-mono text-xs">React.createElement()</code> function queries.</span>
+                            <ul class="space-y-4 pl-1">
+                                <li class="flex items-start gap-3 readable-list-item">
+                                    <i class="fa-solid fa-code text-brand-cyan mt-1.5 flex-shrink-0"></i>
+                                    <span><strong>The Compilation Target:</strong> Babel parses markup blocks into <code class="text-brand-cyan font-mono px-1.5 py-0.5 bg-slate-900 rounded">React.createElement()</code> operations.</span>
                                 </li>
-                                <li class="flex items-start gap-3">
-                                    <i class="fa-solid fa-circle-check text-brand-emerald mt-1"></i>
-                                    <span><strong>The Single Root Mandate:</strong> React functions can only return a single expression value. Wrapping adjacent elements in a Fragment <code class="text-brand-cyan font-mono text-xs">&lt;&gt;&lt;/&gt;</code> packages them as one object.</span>
-                                </li>
-                                <li class="flex items-start gap-3">
-                                    <i class="fa-solid fa-font text-brand-amber mt-1"></i>
-                                    <span><strong>Keyword Conflicts:</strong> Because JSX compiles into JavaScript parameters, reserved keywords cannot be used directly (e.g., <code class="text-brand-cyan font-mono text-xs">class</code> shifts to <code class="text-brand-cyan font-mono text-xs">className</code>).</span>
+                                <li class="flex items-start gap-3 readable-list-item">
+                                    <i class="fa-solid fa-circle-check text-brand-emerald mt-1.5 flex-shrink-0"></i>
+                                    <span><strong>Single Return Restriction:</strong> Since components compile to function calls, they can only return a single returned value wrapper or a safe Fragment container (<code class="text-brand-cyan font-mono">&lt;&gt;</code>).</span>
                                 </li>
                             </ul>
                         </div>
 
                         <div class="space-y-4">
-                            <span class="text-[10px] text-slate-500 uppercase font-bold tracking-wider font-mono">Compilation Mockup</span>
-                            <pre class="bg-brand-code border border-brand-border rounded-xl p-4 text-xs font-mono overflow-x-auto space-y-2 leading-relaxed">
-<span class="text-brand-rose">// 1. What developers write:</span>
+                            <span class="text-xs text-slate-400 uppercase font-bold tracking-wider font-mono">Babel Compilation Output</span>
+                            <pre class="bg-brand-code border border-brand-border rounded-xl p-5 font-mono overflow-x-auto space-y-3 leading-relaxed readable-code text-slate-300">
+<span class="text-brand-rose">// 1. What developers author:</span>
 <span class="text-slate-400">&lt;</span><span class="text-brand-cyan">h1</span> <span class="text-brand-indigo">className</span><span class="text-slate-400">=</span><span class="text-brand-emerald">"title"</span><span class="text-slate-400">&gt;</span>Hello World<span class="text-slate-400">&lt;/</span><span class="text-brand-cyan">h1</span><span class="text-slate-400">&gt;</span>
 
-<span class="text-brand-rose">// 2. What compiling outputs under the hood:</span>
+<span class="text-brand-rose">// 2. What compilers output:</span>
 <span class="text-slate-400">React.</span><span class="text-brand-indigo">createElement</span><span class="text-slate-400">(</span>
   <span class="text-brand-emerald">'h1'</span><span class="text-slate-400">,</span>
   <span class="text-slate-400">{</span> <span class="text-brand-indigo">className</span><span class="text-slate-400">:</span> <span class="text-brand-emerald">'title'</span> <span class="text-slate-400">},</span>
@@ -233,37 +257,37 @@
 
                 <!-- Slide 4: Dynamic Loops and Key Audit -->
                 <div class="slide-element hidden" id="slide-4">
-                    <h2 class="text-3xl font-extrabold text-white mb-6 flex items-center gap-3">
+                    <h2 class="readable-header-lg font-extrabold text-white mb-6 flex items-center gap-4">
                         <i class="fa-solid fa-list-ol text-brand-indigo"></i> Loops, Keys & The Falsy Zero Leak
                     </h2>
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <div class="space-y-4">
-                            <h3 class="font-bold text-white text-lg flex items-center gap-2">
-                                <i class="fa-solid fa-fingerprint text-brand-cyan"></i> The Reconciliation Key Rule
+                        <div class="space-y-6">
+                            <h3 class="readable-header-md font-bold text-white flex items-center gap-3">
+                                <i class="fa-solid fa-fingerprint text-brand-cyan"></i> Reconciliation Key Strategy
                             </h3>
-                            <p class="text-xs text-slate-400 leading-relaxed">
-                                Keys are React's "National ID Card" during diffing operations. They must be unique, stable, and predictable.
+                            <p class="text-slate-400 readable-text">
+                                Keys allow React's diffing engine to match old and new layout states. They must be unique, persistent, and predictable.
                             </p>
-                            <ul class="space-y-2 text-xs text-slate-300">
-                                <li>❌ <strong class="text-brand-rose">The Index Anti-Pattern:</strong> Avoid using array map indices (<code class="text-brand-cyan text-[11px] font-mono">key={index}</code>) on lists where items are deleted, filtered, or reordered. Shifting index pointers will map old DOM state values to wrong elements.</li>
-                                <li>✨ <strong class="text-brand-emerald">Stable Identifiers:</strong> Always map keys to unique database records (<code class="text-brand-cyan text-[11px] font-mono">key={item.id}</code>).</li>
+                            <ul class="space-y-3 text-slate-300">
+                                <li class="readable-list-item">❌ <strong class="text-brand-rose">The Index Fallacy:</strong> Avoid mapping list indices (<code class="text-brand-cyan font-mono">key={index}</code>) to dynamic array loops. Array deletions shift index keys and trigger severe state-matching bugs.</li>
+                                <li class="readable-list-item">✨ <strong class="text-brand-emerald">Persistent Keys:</strong> Always map keys to true database entity records (<code class="text-brand-cyan font-mono">key={item.id}</code>).</li>
                             </ul>
                         </div>
 
                         <div class="space-y-4 bg-brand-card p-6 border border-brand-border rounded-2xl">
-                            <h3 class="font-bold text-white text-lg flex items-center gap-2">
-                                <i class="fa-solid fa-bug text-brand-rose"></i> The Falsy Zero Leak Bug
+                            <h3 class="readable-header-md font-bold text-white flex items-center gap-3">
+                                <i class="fa-solid fa-bug text-brand-rose"></i> The Falsy Zero Leak
                             </h3>
-                            <p class="text-xs text-slate-400 leading-relaxed">
-                                In JavaScript, the short-circuit expression <code class="text-brand-cyan font-mono">0 && SomeJSX</code> returns the falsy value itself (<code class="text-brand-rose font-mono">0</code>), which React renders on screen, creating layout issues.
+                            <p class="text-slate-400 readable-text">
+                                In JavaScript, the short-circuit operation <code class="text-brand-cyan font-mono">0 && SomeJSX</code> returns the falsy value itself (<code class="text-brand-rose font-mono">0</code>). React renders this, leaving a stray zero on the screen.
                             </p>
 
-                            <pre class="bg-brand-code border border-brand-border rounded-xl p-3 text-xs font-mono overflow-x-auto space-y-1.5">
-<span class="text-brand-rose">// ❌ Bad: Renders literal "0" if list is empty</span>
+                            <pre class="bg-brand-code border border-brand-border rounded-xl p-4 font-mono overflow-x-auto space-y-2 readable-code text-slate-300">
+<span class="text-brand-rose">// ❌ Bad: Renders "0" on screen if array is empty</span>
 <span class="text-slate-400">items.length &amp;&amp; &lt;List /&gt;</span>
 
-<span class="text-brand-emerald">// ✨ Best Practice: Safe boolean calculations</span>
+<span class="text-brand-emerald">// ✨ Safe Pattern: Force boolean calculation</span>
 <span class="text-slate-400">items.length &gt; 0 &amp;&amp; &lt;List /&gt;</span></pre>
                         </div>
                     </div>
@@ -271,105 +295,108 @@
 
                 <!-- Slide 5: Memory Closures & References -->
                 <div class="slide-element hidden" id="slide-5">
-                    <h2 class="text-3xl font-extrabold text-white mb-6 flex items-center gap-3">
+                    <h2 class="readable-header-lg font-extrabold text-white mb-6 flex items-center gap-4">
                         <i class="fa-solid fa-memory text-brand-indigo"></i> Immutability & Reference Audits
                     </h2>
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <div class="space-y-4 text-sm text-slate-300">
-                            <p class="leading-relaxed">
-                                React checks for changes inside non-primitive structures (arrays and objects) using a strict reference pointer assessment (<code class="text-brand-cyan font-mono">===</code>).
+                        <div class="space-y-6 text-slate-300">
+                            <p class="readable-text">
+                                React tracks state variations on complex types (arrays and objects) using strict identity comparisons (<code class="text-brand-cyan font-mono">===</code>) of the memory reference pointer.
                             </p>
-                            <ul class="space-y-3 text-xs">
-                                <li class="flex items-start gap-2">
-                                    <i class="fa-solid fa-triangle-exclamation text-brand-rose mt-1"></i>
-                                    <span><strong>The Pointer Audit Trap:</strong> Modifying an array directly using push changes its values but leaves its pointer address in memory completely identical. React skips the re-render pass entirely.</span>
+                            <ul class="space-y-4">
+                                <li class="flex items-start gap-3 readable-list-item">
+                                    <i class="fa-solid fa-triangle-exclamation text-brand-rose mt-1.5 flex-shrink-0"></i>
+                                    <span><strong>The Reference Lock Trap:</strong> Direct mutations like <code class="text-brand-cyan font-mono">arr.push()</code> change the data inside the array but leave the memory pointer unchanged. React skips the render pass entirely.</span>
                                 </li>
-                                <li class="flex items-start gap-2">
-                                    <i class="fa-solid fa-clone text-brand-emerald mt-1"></i>
-                                    <span><strong>Creating Fresh References:</strong> Spread operators <code class="text-brand-cyan font-mono">[...prev]</code> instantiate a brand new array reference pointer, telling React a state change occurred.</span>
+                                <li class="flex items-start gap-3 readable-list-item">
+                                    <i class="fa-solid fa-clone text-brand-emerald mt-1.5 flex-shrink-0"></i>
+                                    <span><strong>Reference Allocation:</strong> Use the ES6 spread operator <code class="text-brand-cyan font-mono">[...prev]</code> to duplicate lists and assign a fresh memory pointer, triggering a clean UI refresh.</span>
                                 </li>
                             </ul>
                         </div>
 
                         <div class="space-y-4">
-                            <pre class="bg-brand-code border border-brand-border rounded-xl p-4 text-xs font-mono overflow-x-auto space-y-2 leading-relaxed">
-<span class="text-brand-rose">// ❌ Direct Mutation: Reference pointer matches, UI stays stale</span>
+                            <span class="text-xs text-slate-400 uppercase font-bold tracking-wider font-mono">Reference Mutation Trap vs Fix</span>
+                            <pre class="bg-brand-code border border-brand-border rounded-xl p-5 font-mono overflow-x-auto space-y-3 leading-relaxed readable-code text-slate-300">
+<span class="text-brand-rose">// ❌ Direct Mutation: Identical pointer address, UI stays stale</span>
 <span class="text-slate-400">tasks.push(newRecord);</span>
-<span class="text-slate-450">setTasks(tasks);</span>
+<span class="text-slate-400">setTasks(tasks); </span>
 
-<span class="text-brand-emerald">// ✨ Structural Clone: Generates new memory address, triggers render</span>
+<span class="text-brand-emerald">// ✨ Structural Clone: Generates new address, triggers render</span>
 <span class="text-slate-400">setTasks(prev => [...prev, newRecord]);</span></pre>
                         </div>
                     </div>
                 </div>
 
-                <!-- Slide 6: Controlled vs Uncontrolled Forms (DEEP DIVE) -->
+                <!-- Slide 6: DEEP DIVE: Controlled vs Uncontrolled Forms -->
                 <div class="slide-element hidden" id="slide-6">
-                    <div class="flex items-center justify-between mb-4">
-                        <h2 class="text-3xl font-extrabold text-white flex items-center gap-3">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="readable-header-lg font-extrabold text-white flex items-center gap-4">
                             <i class="fa-solid fa-keyboard text-brand-indigo"></i> Controlled vs Uncontrolled Forms
                         </h2>
-                        <span class="text-[10px] font-mono font-bold bg-brand-rose/20 text-brand-rose px-3 py-1 rounded-full border border-brand-rose/30">DEEP DIVE</span>
+                        <span class="text-xs font-mono font-bold bg-brand-rose/20 text-brand-rose px-4 py-1.5 rounded-full border border-brand-rose/30">DEEP DIVE</span>
                     </div>
                     
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <div class="p-6 bg-brand-card border border-brand-border rounded-2xl space-y-4">
-                            <h3 class="font-bold text-white text-base flex items-center gap-2">
-                                <i class="fa-solid fa-circle-check text-brand-cyan"></i> Controlled: Single Source of Truth
-                            </h3>
-                            <p class="text-xs text-slate-400 leading-relaxed">
-                                Form elements are fully synchronized with React state. Every keypress modifies state, forcing the UI component to re-render.
-                            </p>
-                            <pre class="bg-brand-code border border-brand-border rounded-xl p-3 text-[11px] font-mono text-slate-300">
-<span class="text-slate-500">// React manages element value on every frame</span>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div class="p-6 bg-brand-card border border-brand-border rounded-2xl space-y-4 flex flex-col justify-between">
+                            <div>
+                                <h3 class="readable-header-md font-bold text-white flex items-center gap-3 mb-3">
+                                    <i class="fa-solid fa-circle-check text-brand-cyan"></i> Controlled: State Synced
+                                </h3>
+                                <p class="readable-text text-slate-450 mb-4">
+                                    React is the single source of truth. Every keystroke updates the state, triggering a re-render. This approach is highly interactive but has a higher render cost.
+                                </p>
+                                <pre class="bg-brand-code border border-brand-border rounded-xl p-4 font-mono readable-code text-slate-300">
 <span class="text-slate-400">&lt;</span><span class="text-brand-cyan">input</span>
   <span class="text-brand-indigo">value</span><span class="text-slate-400">={email}</span>
   <span class="text-brand-indigo">onChange</span><span class="text-slate-400">={e =&gt; </span><span class="text-brand-emerald">setEmail</span><span class="text-slate-400">(e.target.value)}</span>
 <span class="text-slate-400">/&gt;</span></pre>
-                            <ul class="text-[11px] text-slate-400 space-y-1 list-disc pl-4">
-                                <li><strong>Pros:</strong> Dynamic field validation, instant layout mutations.</li>
-                                <li><strong>Cons:</strong> Heavy rendering load during rapid user typing.</li>
+                            </div>
+                            <ul class="readable-list-item text-slate-400 space-y-1 list-disc pl-5">
+                                <li><strong>Best for:</strong> Live validation, password feedback, dynamic field setups.</li>
+                                <li><strong>Drawback:</strong> High render frequency on large forms.</li>
                             </ul>
                         </div>
 
-                        <div class="p-6 bg-brand-card border border-brand-border rounded-2xl space-y-4">
-                            <h3 class="font-bold text-white text-base flex items-center gap-2">
-                                <i class="fa-solid fa-bolt text-brand-amber"></i> Uncontrolled: Browser DOM Management
-                            </h3>
-                            <p class="text-xs text-slate-400 leading-relaxed">
-                                The browser DOM handles value states natively. Values are fetched only when needed (like form submission) using raw memory references.
-                            </p>
-                            <pre class="bg-brand-code border border-brand-border rounded-xl p-3 text-[11px] font-mono text-slate-300">
-<span class="text-slate-500">// DOM manages value; query on click</span>
+                        <div class="p-6 bg-brand-card border border-brand-border rounded-2xl space-y-4 flex flex-col justify-between">
+                            <div>
+                                <h3 class="readable-header-md font-bold text-white flex items-center gap-3 mb-3">
+                                    <i class="fa-solid fa-bolt text-brand-amber"></i> Uncontrolled: Browser DOM
+                                </h3>
+                                <p class="readable-text text-slate-450 mb-4">
+                                    The browser's native DOM manages the field values. Values are queried only on submission using memory refs, keeping renders to a absolute minimum.
+                                </p>
+                                <pre class="bg-brand-code border border-brand-border rounded-xl p-4 font-mono readable-code text-slate-300">
 <span class="text-slate-400">const emailRef = </span><span class="text-brand-indigo">useRef</span><span class="text-slate-400">(null);</span>
-<span class="text-slate-400">const submit = () =&gt; </span><span class="text-brand-emerald">fetch</span><span class="text-slate-400">(emailRef.current.value);</span>
+<span class="text-slate-400">const submit = () =&gt; </span><span class="text-brand-emerald">api</span><span class="text-slate-400">(emailRef.current.value);</span>
 <span class="text-slate-400">&lt;</span><span class="text-brand-cyan">input</span> <span class="text-brand-indigo">ref</span><span class="text-slate-400">={emailRef} /&gt;</span></pre>
-                            <ul class="text-[11px] text-slate-400 space-y-1 list-disc pl-4">
-                                <li><strong>Pros:</strong> Optimal performance, zero re-renders during keyboard typing.</li>
-                                <li><strong>Cons:</strong> Impossible to run live character checks or inline password rules.</li>
+                            </div>
+                            <ul class="readable-list-item text-slate-400 space-y-1 list-disc pl-5">
+                                <li><strong>Best for:</strong> Low-cost, high-speed input sheets.</li>
+                                <li><strong>Drawback:</strong> No immediate interactive UI validations.</li>
                             </ul>
                         </div>
                     </div>
                 </div>
 
-                <!-- Slide 7: Multi-Input Form Scaffolding -->
+                <!-- Slide 7: DEEP DIVE: Scaling Multi-Input Forms -->
                 <div class="slide-element hidden" id="slide-7">
-                    <div class="flex items-center justify-between mb-4">
-                        <h2 class="text-3xl font-extrabold text-white flex items-center gap-3">
-                            <i class="fa-solid fa-sliders text-brand-indigo"></i> Unified State Form Scaling
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="readable-header-lg font-extrabold text-white flex items-center gap-4">
+                            <i class="fa-solid fa-sliders text-brand-indigo"></i> Scaling Multi-Input Forms
                         </h2>
-                        <span class="text-[10px] font-mono font-bold bg-brand-cyan/20 text-brand-cyan px-3 py-1 rounded-full border border-brand-cyan/30">SCALING PATTERNS</span>
+                        <span class="text-xs font-mono font-bold bg-brand-cyan/20 text-brand-cyan px-4 py-1.5 rounded-full border border-brand-cyan/30">FORM OPTIMIZATION</span>
                     </div>
 
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <div class="space-y-4">
-                            <p class="text-sm text-slate-300 leading-relaxed">
-                                Declaring independent state Hooks for a form with 10+ fields introduces extreme boilerplate and makes state management brittle.
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div class="space-y-6 text-slate-300">
+                            <p class="readable-text">
+                                Declaring individual state variables (<code class="text-brand-cyan font-mono">useState("")</code>) for 10+ form fields creates duplicate, hard-to-maintain boilerplate code.
                             </p>
-                            <div class="p-4 bg-brand-code border border-brand-rose/20 rounded-xl space-y-2">
-                                <span class="text-[10px] text-brand-rose uppercase font-mono font-bold">❌ Anti-Pattern: Field Overloading</span>
-                                <pre class="text-[11px] font-mono text-slate-400">
+                            <div class="p-5 bg-red-950/20 border border-brand-rose/20 rounded-xl space-y-2">
+                                <span class="text-xs text-brand-rose font-bold uppercase font-mono">❌ Anti-Pattern: Individual State Overload</span>
+                                <pre class="font-mono readable-code text-slate-400">
 const [first, setFirst] = useState("");
 const [last, setLast] = useState("");
 const [email, setEmail] = useState("");
@@ -378,46 +405,49 @@ const [phone, setPhone] = useState("");</pre>
                         </div>
 
                         <div class="space-y-4">
-                            <div class="p-5 bg-brand-card border border-brand-border rounded-2xl">
-                                <span class="text-[10px] text-brand-emerald uppercase font-mono font-bold">✨ Production Design: Unified Object Pattern</span>
-                                <p class="text-xs text-slate-400 mb-3 mt-1">Bind the form context into a cohesive object and manage updates using dynamic keys.</p>
-                                <pre class="bg-brand-code border border-brand-border rounded-xl p-4 text-[11px] font-mono text-slate-300 overflow-x-auto space-y-1">
+                            <div class="p-6 bg-brand-card border border-brand-border rounded-2xl">
+                                <span class="text-xs text-brand-emerald uppercase font-mono font-bold">✨ Production Blueprint: Unified Form Object</span>
+                                <p class="readable-text text-slate-400 mb-4 mt-1">Bind form inputs into a single object and use dynamic name properties to handle modifications cleanly.</p>
+                                <pre class="bg-brand-code border border-brand-border rounded-xl p-5 font-mono readable-code text-slate-300 overflow-x-auto space-y-2">
 <span class="text-slate-400">const [form, setForm] = </span><span class="text-brand-indigo">useState</span><span class="text-slate-400">({ first: </span><span class="text-brand-emerald">""</span><span class="text-slate-400">, email: </span><span class="text-brand-emerald">""</span><span class="text-slate-400"> });</span>
 
 <span class="text-slate-400">const </span><span class="text-brand-indigo">handleChange</span><span class="text-slate-400"> = (e) =&gt; {</span>
   <span class="text-slate-400">const { name, value } = e.target;</span>
-  <span class="text-slate-450">setForm(prev => ({ ...prev, [name]: value }));</span>
+  <span class="text-slate-450">setForm(prev => ({ </span>
+    <span class="text-slate-450">...prev, </span>
+    <span class="text-slate-450">[name]: value // 👈 Dynamic Computed Key</span>
+  <span class="text-slate-450">}));</span>
 <span class="text-slate-400">};</span></pre>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Slide 8: Computed Validation Logic -->
+                <!-- Slide 8: DEEP DIVE: On-The-Fly Calculated Validations -->
                 <div class="slide-element hidden" id="slide-8">
-                    <h2 class="text-3xl font-extrabold text-white mb-6 flex items-center gap-3">
+                    <h2 class="readable-header-lg font-extrabold text-white mb-6 flex items-center gap-4">
                         <i class="fa-solid fa-calculator text-brand-indigo"></i> On-The-Fly Calculations vs Sync Effects
                     </h2>
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <div class="space-y-4 text-sm text-slate-300">
-                            <p class="leading-relaxed">
-                                Storing dependent validation values (e.g., <code class="text-brand-cyan font-mono text-xs">isFormValid</code>) in separate state states synchronized via <code class="text-brand-cyan font-mono text-xs">useEffect</code> is a major performance bottleneck.
+                        <div class="space-y-6 text-slate-300">
+                            <p class="readable-text">
+                                Managing calculated values (like <code class="text-brand-cyan font-mono">isFormValid</code>) inside dedicated states synchronized via <code class="text-brand-cyan font-mono">useEffect</code> creates a dual-render cycle.
                             </p>
-                            <div class="bg-red-950/20 border border-brand-rose/20 rounded-xl p-4 space-y-1.5">
-                                <strong class="text-xs text-brand-rose uppercase block font-mono">❌ The Sync-Effect Bottleneck:</strong>
-                                <span class="text-xs text-slate-400">This pattern causes dual-render passes. Every keystroke triggers state change #1, prompting a render, then fires the effect, driving state change #2 and prompting a second render.</span>
+                            <div class="bg-red-950/20 border border-brand-rose/20 rounded-xl p-5 space-y-3">
+                                <strong class="text-sm text-brand-rose uppercase block font-mono">❌ Dual-Render Bottleneck:</strong>
+                                <span class="readable-text text-slate-400 block">User keystroke triggers State Change #1. React renders, then fires the effect, which triggers State Change #2, running a second render cycle.</span>
                             </div>
                         </div>
 
                         <div class="space-y-4">
-                            <div class="p-5 bg-brand-card border border-brand-border rounded-2xl">
-                                <span class="text-[10px] text-brand-emerald uppercase font-mono font-bold">✨ Derived State Calculation</span>
-                                <p class="text-xs text-slate-400 mb-3 mt-1">Calculate form validations dynamically during the render execution cycle, bypassing state-sync effect loops entirely.</p>
-                                <pre class="bg-brand-code border border-brand-border rounded-xl p-4 text-[11px] font-mono text-slate-300 overflow-x-auto space-y-1">
+                            <div class="p-6 bg-brand-card border border-brand-border rounded-2xl">
+                                <span class="text-xs text-brand-emerald uppercase font-mono font-bold">✨ Derived State Calculation</span>
+                                <p class="readable-text text-slate-400 mb-4 mt-1">Calculate form validations directly inside the render pass, keeping states simple and avoiding extra sync loops.</p>
+                                <pre class="bg-brand-code border border-brand-border rounded-xl p-5 font-mono readable-code text-slate-300 overflow-x-auto space-y-2">
 <span class="text-slate-400">const [email, setEmail] = </span><span class="text-brand-indigo">useState</span><span class="text-slate-400">(</span><span class="text-brand-emerald">""</span><span class="text-slate-400">);</span>
 
-<span class="text-slate-505">// Calculated instantly during every single render pass:</span>
+<span class="text-slate-500">// Calculated instantly during every render pass:</span>
 <span class="text-slate-400">const isEmailInvalid = !email.</span><span class="text-brand-indigo">includes</span><span class="text-slate-400">(</span><span class="text-brand-emerald">"@"</span><span class="text-slate-400">);</span>
 <span class="text-slate-450">const isSubmitDisabled = isEmailInvalid || !email;</span></pre>
                             </div>
@@ -425,98 +455,98 @@ const [phone, setPhone] = useState("");</pre>
                     </div>
                 </div>
 
-                <!-- Slide 9: Under the Hood SPA Routing (DEEP DIVE) -->
+                <!-- Slide 9: DEEP DIVE: Client-Side Routing Mechanics -->
                 <div class="slide-element hidden" id="slide-9">
-                    <div class="flex items-center justify-between mb-4">
-                        <h2 class="text-3xl font-extrabold text-white flex items-center gap-3">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="readable-header-lg font-extrabold text-white flex items-center gap-4">
                             <i class="fa-solid fa-compass text-brand-indigo"></i> Under the Hood: Client-Side Routing
                         </h2>
-                        <span class="text-[10px] font-mono font-bold bg-brand-rose/20 text-brand-rose px-3 py-1 rounded-full border border-brand-rose/30">SPA CORE MECHANICS</span>
+                        <span class="text-xs font-mono font-bold bg-brand-rose/20 text-brand-rose px-4 py-1.5 rounded-full border border-brand-rose/30">SPA CORE MECHANICS</span>
                     </div>
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <div class="space-y-4 text-sm text-slate-300">
-                            <p class="leading-relaxed">
-                                Client-side routing allows single-page applications to update the URL in the address bar dynamically, matching specific layouts without querying the backend server for new HTML documents.
+                        <div class="space-y-6 text-slate-300">
+                            <p class="readable-text">
+                                Single Page Applications (SPAs) manage routing in the browser. Instead of making network requests for new HTML pages, the router intercepts navigation events to update components dynamically.
                             </p>
-                            <div class="space-y-3">
-                                <div class="flex gap-3">
-                                    <div class="w-8 h-8 rounded-full bg-brand-indigo/15 text-brand-indigo flex items-center justify-center font-bold font-mono shrink-0">1</div>
-                                    <p class="text-xs text-slate-450 leading-relaxed"><strong>HTML5 History pushState:</strong> <code class="text-brand-cyan text-[11px] font-mono">window.history.pushState()</code> writes an entry onto the browser's history log, updating the address bar programmatically without prompting a network reload.</p>
+                            <div class="space-y-4">
+                                <div class="flex gap-4">
+                                    <div class="w-10 h-10 rounded-full bg-brand-indigo/15 text-brand-indigo flex items-center justify-center font-bold font-mono shrink-0">1</div>
+                                    <p class="readable-text text-slate-400"><strong>History pushState:</strong> <code class="text-brand-cyan font-mono text-base">window.history.pushState()</code> updates the browser's address bar without triggering a network reload.</p>
                                 </div>
-                                <div class="flex gap-3">
-                                    <div class="w-8 h-8 rounded-full bg-brand-cyan/15 text-brand-cyan flex items-center justify-center font-bold font-mono shrink-0">2</div>
-                                    <p class="text-xs text-slate-450 leading-relaxed"><strong>Popstate Event Listening:</strong> When a user clicks browser back/forward buttons, the native browser triggers a <code class="text-brand-cyan text-[11px] font-mono">popstate</code> event. The client router intercepts this event to mount the appropriate components.</p>
+                                <div class="flex gap-4">
+                                    <div class="w-10 h-10 rounded-full bg-brand-cyan/15 text-brand-cyan flex items-center justify-center font-bold font-mono shrink-0">2</div>
+                                    <p class="readable-text text-slate-400"><strong>Intercepting popstate:</strong> The router listens for browser back and forward actions to load and mount the correct views.</p>
                                 </div>
                             </div>
                         </div>
 
                         <div class="space-y-4">
-                            <pre class="bg-brand-code border border-brand-border rounded-xl p-4 text-xs font-mono overflow-x-auto space-y-2 leading-relaxed">
-<span class="text-brand-rose">// Under the hood router listening mechanics</span>
+                            <pre class="bg-brand-code border border-brand-border rounded-xl p-5 font-mono overflow-x-auto space-y-3 leading-relaxed readable-code text-slate-300">
+<span class="text-brand-rose">// Underlying router event listening mechanics</span>
 <span class="text-slate-400">window.</span><span class="text-brand-indigo">addEventListener</span><span class="text-slate-400">(</span><span class="text-brand-emerald">'popstate'</span><span class="text-slate-400">, () =&gt; {</span>
-  <span class="text-slate-500">// Read new path address from local window context</span>
+  <span class="text-slate-500">// Read the current URL path directly</span>
   <span class="text-slate-400">const currentPath = window.location.pathname;</span>
-  <span class="text-slate-450">triggerLocalViewUpdate(currentPath);</span>
+  <span class="text-slate-450">updateActiveRouteComponent(currentPath);</span>
 <span class="text-slate-400">});</span></pre>
                         </div>
                     </div>
                 </div>
 
-                <!-- Slide 10: Anchor tags vs Router Link Component -->
+                <!-- Slide 10: DEEP DIVE: Anchor tags vs Router Link Component -->
                 <div class="slide-element hidden" id="slide-10">
-                    <h2 class="text-3xl font-extrabold text-white mb-6 flex items-center gap-3">
-                        <i class="fa-solid fa-link-slash text-brand-indigo"></i> The Great Link Debate: &lt;a&gt; vs &lt;Link&gt;
+                    <h2 class="readable-header-lg font-extrabold text-white mb-6 flex items-center gap-4">
+                        <i class="fa-solid fa-link-slash text-brand-indigo"></i> The Link Debate: &lt;a&gt; vs &lt;Link&gt;
                     </h2>
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <div class="space-y-4 text-sm text-slate-300">
-                            <p class="leading-relaxed">
-                                Standard anchor tags break single-page applications. They force the browser to execute a hard page reload, destroying React's active memory heap and all loaded states.
+                        <div class="space-y-6 text-slate-300">
+                            <p class="readable-text">
+                                Standard anchor tags (<code class="text-brand-cyan font-mono">&lt;a&gt;</code>) force full browser reloads, resetting React's memory and clearing active application states.
                             </p>
-                            <div class="p-4 bg-red-950/25 border border-brand-rose/20 rounded-xl space-y-1.5">
-                                <strong class="text-xs text-brand-rose font-bold block uppercase font-mono">❌ Hard Reload State Erasure:</strong>
-                                <span class="text-xs text-slate-400">Using <code class="text-brand-cyan font-mono text-[11px]">&lt;a href="/profile"&gt;</code> completely clears the active client state, deletes context trees, resets active state values, and forces the browser to re-download all JS bundles.</span>
+                            <div class="p-5 bg-red-950/25 border border-brand-rose/20 rounded-xl space-y-3">
+                                <strong class="text-sm text-brand-rose font-bold block uppercase font-mono">❌ Hard Reload State Erasure:</strong>
+                                <span class="readable-text text-slate-400 block">Using <code class="text-brand-rose font-mono">&lt;a href="/profile"&gt;</code> causes the browser to fetch a new document, clearing all Context hooks, useState caches, and active connections.</span>
                             </div>
                         </div>
 
                         <div class="space-y-4">
-                            <div class="p-5 bg-brand-card border border-brand-border rounded-2xl">
-                                <span class="text-[10px] text-brand-emerald uppercase font-mono font-bold">✨ Programmatic Navigation Shield</span>
-                                <p class="text-xs text-slate-400 mb-3 mt-1">How the React Router <code class="text-brand-cyan font-mono">&lt;Link&gt;</code> intercepts navigation events cleanly.</p>
-                                <pre class="bg-brand-code border border-brand-border rounded-xl p-4 text-[11px] font-mono text-slate-300 overflow-x-auto space-y-1">
-<span class="text-slate-500">// Behind the scenes Link navigation intercept</span>
+                            <div class="p-6 bg-brand-card border border-brand-border rounded-2xl">
+                                <span class="text-xs text-brand-emerald uppercase font-mono font-bold">✨ Programmatic Routing Interceptor</span>
+                                <p class="readable-text text-slate-400 mb-4 mt-1">How the React Router <code class="text-brand-cyan font-mono">&lt;Link&gt;</code> element stops standard browser reloads.</p>
+                                <pre class="bg-brand-code border border-brand-border rounded-xl p-5 font-mono readable-code text-slate-300 overflow-x-auto space-y-2">
+<span class="text-slate-500">// Custom Link action under the hood</span>
 <span class="text-slate-400">const </span><span class="text-brand-indigo">handleLinkNavigation</span><span class="text-slate-400"> = (event) =&gt; {</span>
-  <span class="text-brand-rose">event.preventDefault(); // 👈 Kill the reload request</span>
+  <span class="text-brand-rose">event.preventDefault(); // 👈 Block full page reload</span>
   <span class="text-slate-400">window.history.</span><span class="text-brand-indigo">pushState</span><span class="text-slate-400">({}, "", targetPath);</span>
-  <span class="text-slate-450">triggerClientRender();</span>
+  <span class="text-slate-450">triggerLocalUIUpdate();</span>
 <span class="text-slate-400">};</span></pre>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Slide 11: useEffect & Fetch Syncing -->
+                <!-- Slide 11: Side Effects & Fetch Syncing -->
                 <div class="slide-element hidden" id="slide-11">
-                    <h2 class="text-3xl font-extrabold text-white mb-6 flex items-center gap-3">
+                    <h2 class="readable-header-lg font-extrabold text-white mb-6 flex items-center gap-4">
                         <i class="fa-solid fa-network-wired text-brand-indigo"></i> Side Effects & API Fetch Synchronization
                     </h2>
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <div class="space-y-4 text-sm text-slate-300 font-sans">
-                            <p class="leading-relaxed">
-                                Move beyond traditional component lifecycles. View <code class="text-brand-cyan font-mono text-xs">useEffect</code> strictly as an operational gateway to synchronize your component state with an external system.
+                        <div class="space-y-6 text-slate-300">
+                            <p class="readable-text">
+                                Don't treat <code class="text-brand-cyan font-mono">useEffect</code> as a traditional lifecycle method. Its primary purpose is to keep your component's state in sync with external resources.
                             </p>
-                            <div class="bg-brand-card p-4 border border-brand-border rounded-xl space-y-2">
-                                <strong class="text-xs text-brand-amber font-bold block uppercase font-mono">🛡️ Shielding Race Conditions:</strong>
-                                <p class="text-xs text-slate-400 leading-relaxed">
-                                    When rapidly changing request targets (e.g., query identifiers), slow network paths can resolve out of order, overwriting current views with stale data. Always cancel pending network tasks in the effect cleanup step using an <code class="text-brand-cyan font-mono text-[11px]">AbortController</code>.
+                            <div class="bg-brand-card p-5 border border-brand-border rounded-xl space-y-3">
+                                <strong class="text-sm text-brand-amber font-bold block uppercase font-mono">🛡️ Shielding Race Conditions:</strong>
+                                <p class="readable-text text-slate-400">
+                                    When rapidly changing request targets, slow network paths can resolve out of order and overwrite your views with stale data. Always cancel pending requests in the effect's cleanup phase.
                                 </p>
                             </div>
                         </div>
 
                         <div class="space-y-4">
-                            <pre class="bg-brand-code border border-brand-border rounded-xl p-4 text-[11px] font-mono text-slate-300 overflow-x-auto space-y-1.5">
+                            <pre class="bg-brand-code border border-brand-border rounded-xl p-5 font-mono text-slate-300 overflow-x-auto space-y-2 readable-code">
 <span class="text-slate-400">useEffect(() =&gt; {</span>
   <span class="text-brand-rose">const controller = new AbortController();</span>
   
@@ -524,7 +554,7 @@ const [phone, setPhone] = useState("");</pre>
     <span class="text-slate-400">.then(res =&gt; res.json())</span>
     <span class="text-slate-400">.then(data =&gt; setData(data));</span>
 
-  <span class="text-slate-450">return () =&gt; controller.abort(); // Cancel on unmount</span>
+  <span class="text-slate-450">return () =&gt; controller.abort(); // 👈 Abort on unmount</span>
 <span class="text-slate-400">}, [id]);</span></pre>
                         </div>
                     </div>
@@ -532,27 +562,27 @@ const [phone, setPhone] = useState("");</pre>
 
                 <!-- Slide 12: Context API & Render Boundaries -->
                 <div class="slide-element hidden" id="slide-12">
-                    <h2 class="text-3xl font-extrabold text-white mb-6 flex items-center gap-3">
+                    <h2 class="readable-header-lg font-extrabold text-white mb-6 flex items-center gap-4">
                         <i class="fa-solid fa-circle-nodes text-brand-indigo"></i> Context API & Render Boundaries
                     </h2>
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <div class="space-y-4 text-sm text-slate-300">
-                            <p class="leading-relaxed">
-                                The Context API is designed for lightweight prop transport (e.g., UI themes, locale settings), not high-frequency state management.
+                        <div class="space-y-6 text-slate-300">
+                            <p class="readable-text">
+                                Context API is built for global state sharing, not high-frequency updates.
                             </p>
-                            <div class="bg-red-950/20 border border-brand-rose/20 rounded-xl p-4 space-y-1.5">
-                                <strong class="text-xs text-brand-rose font-bold block uppercase font-mono">⚠️ Context Re-render Cascades:</strong>
-                                <span class="text-xs text-slate-400">When a context value object updates, every component that consumes that context is forced to run its entire re-render pass, even if it only uses an unchanged sibling property.</span>
+                            <div class="bg-red-950/20 border border-brand-rose/20 rounded-xl p-5 space-y-2">
+                                <strong class="text-sm text-brand-rose font-bold block uppercase font-mono">⚠️ Context Re-render Cascades:</strong>
+                                <span class="readable-text text-slate-400">When context values update, every component consuming that context is forced to re-render, even if it only reads an unchanged sibling property.</span>
                             </div>
-                            <p class="text-xs text-slate-400 leading-relaxed">
-                                <strong>Optimization Strategy:</strong> Keep context providers isolated and single-purpose. Segment your state across distinct, focused context providers (e.g., <code class="text-brand-cyan text-[11px] font-mono">ThemeProvider</code>, <code class="text-brand-cyan text-[11px] font-mono">AuthProvider</code>) instead of grouping them into one global context.
+                            <p class="readable-text text-slate-400">
+                                <strong>Optimization Strategy:</strong> Segment your global state into small, focused context providers (e.g., separate <code class="text-brand-cyan font-mono text-base">ThemeProvider</code> from <code class="text-brand-cyan font-mono text-base">AuthProvider</code>) to isolate renders.
                             </p>
                         </div>
 
                         <div class="space-y-4">
-                            <pre class="bg-brand-code border border-brand-border rounded-xl p-4 text-[11px] font-mono text-slate-300 overflow-x-auto space-y-1">
-<span class="text-slate-500">// Clean design splits domains into modular wrappers:</span>
+                            <pre class="bg-brand-code border border-brand-border rounded-xl p-5 font-mono readable-code text-slate-300 overflow-x-auto space-y-2">
+<span class="text-slate-500">// Segmented Context Provider Architecture</span>
 <span class="text-slate-400">&lt;</span><span class="text-brand-cyan">ThemeProvider</span><span class="text-slate-400">&gt;</span>
   <span class="text-slate-400">&lt;</span><span class="text-brand-cyan">AuthProvider</span><span class="text-slate-400">&gt;</span>
     <span class="text-slate-400">&lt;</span><span class="text-brand-cyan">AppRouter</span> <span class="text-slate-400">/&gt;</span>
@@ -564,57 +594,90 @@ const [phone, setPhone] = useState("");</pre>
 
                 <!-- Slide 13: Project Structure Layouts -->
                 <div class="slide-element hidden" id="slide-13">
-                    <div class="flex items-center justify-between mb-4">
-                        <h2 class="text-3xl font-extrabold text-white flex items-center gap-3">
-                            <i class="fa-solid fa-folder-tree text-brand-indigo"></i> Scaling Folder Architectures
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="readable-header-lg font-extrabold text-white flex items-center gap-4">
+                            <i class="fa-solid fa-folder-tree text-brand-indigo"></i> Project Scaffolding Styles
                         </h2>
-                        <span class="text-[10px] font-mono font-bold bg-brand-cyan/20 text-brand-cyan px-3 py-1 rounded-full border border-brand-cyan/30">SCALING ARCHITECTURE</span>
+                        <span class="text-xs font-mono font-bold bg-brand-cyan/20 text-brand-cyan px-4 py-1.5 rounded-full border border-brand-cyan/30">ARCHITECTURE</span>
                     </div>
 
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                        <div class="p-5 bg-brand-card border border-brand-border rounded-2xl space-y-3">
-                            <h3 class="font-bold text-white text-sm flex items-center gap-2">
-                                <i class="fa-solid fa-layer-group text-slate-400"></i> Layer-Based Directory Layout (Technical Roots)
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div class="p-6 bg-brand-card border border-brand-border rounded-2xl space-y-4">
+                            <h3 class="readable-header-md font-bold text-white flex items-center gap-3">
+                                <i class="fa-solid fa-layer-group text-slate-400"></i> Layer-Based Directory Layout
                             </h3>
-                            <p class="text-[11px] text-slate-400 leading-normal">
-                                Grouping files strictly by technical type. Suitable for small apps, but creates massive file navigation overhead as components scale to hundreds.
+                            <p class="readable-text text-slate-400">
+                                Grouping files strictly by their technical type. Simple to set up initially, but increases project navigation overhead as the application grows.
                             </p>
-                            <pre class="bg-brand-code border border-brand-border rounded-xl p-3 text-[10px] font-mono text-slate-300">
+                            <pre class="bg-brand-code border border-brand-border rounded-xl p-4 font-mono readable-code text-slate-300">
 📁 src/
-  📁 components/  # All presentation inputs, cards
-  📁 hooks/       # Every custom business hook
-  📁 pages/       # All dashboard route layouts</pre>
+  📁 components/  # Buttons, inputs, tables
+  📁 hooks/       # useAuth, useFetch, useTheme
+  📁 pages/       # Home, Dashboard, Profile</pre>
                         </div>
 
-                        <div class="p-5 bg-brand-card border border-brand-border rounded-2xl space-y-3">
-                            <h3 class="font-bold text-white text-sm flex items-center gap-2">
-                                <i class="fa-solid fa-boxes-packing text-brand-cyan"></i> Feature-Based / Colocation Pattern (Domain Driven)
+                        <div class="p-6 bg-brand-card border border-brand-border rounded-2xl space-y-4">
+                            <h3 class="readable-header-md font-bold text-white flex items-center gap-3">
+                                <i class="fa-solid fa-boxes-packing text-brand-cyan"></i> Feature-Based / Colocation Pattern
                             </h3>
-                            <p class="text-[11px] text-slate-400 leading-normal">
-                                Enforce the Colocation Principle: place files that change together next to each other. Self-contained features simplify maintenance and prevent massive system merge conflicts.
+                            <p class="readable-text text-slate-400">
+                                Enforce the Colocation Principle: place files that change together next to each other. This structure isolates features, simplifying scaling and team collaboration.
                             </p>
-                            <pre class="bg-brand-code border border-brand-border rounded-xl p-3 text-[10px] font-mono text-slate-350">
+                            <pre class="bg-brand-code border border-brand-border rounded-xl p-4 font-mono readable-code text-slate-350">
 📁 src/
   📁 features/
-    📁 auth/      # Self-contained domain
+    📁 auth/      # Self-contained auth feature
       📄 AuthForm.jsx
       📄 useAuth.js
-    📁 cart/      # Isolated feature
+    📁 cart/      # Self-contained cart feature
       📄 CartDropdown.jsx</pre>
                         </div>
                     </div>
                 </div>
 
-                <!-- Slide 14: Code Challenge Game -->
+                <!-- Slide 14: Enterprise Scaffolding -->
                 <div class="slide-element hidden" id="slide-14">
-                    <h2 class="text-3xl font-extrabold text-white mb-6 flex items-center gap-3">
-                        <i class="fa-solid fa-terminal text-brand-rose animate-pulse"></i> Interactive Challenge: Find the Bug!
+                    <h2 class="readable-header-lg font-extrabold text-white mb-6 flex items-center gap-4">
+                        <i class="fa-solid fa-building text-brand-indigo"></i> Production Architecture Standards
+                    </h2>
+                    <p class="text-slate-400 readable-text mb-8">
+                        Organizing code responsibly ensures readability and maintainability. Keep components pure, decouple business logic into custom hooks, and manage API boundaries cleanly.
+                    </p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <div class="p-6 bg-brand-card border border-brand-border rounded-xl space-y-3">
+                            <div class="text-2xl">📁</div>
+                            <h3 class="readable-header-md font-bold text-white">Components/</h3>
+                            <p class="text-slate-400 readable-text">Presentation wrappers. Focused solely on rendering layout markup and styles.</p>
+                        </div>
+                        <div class="p-6 bg-brand-card border border-brand-border rounded-xl space-y-3">
+                            <div class="text-2xl">🔌</div>
+                            <h3 class="readable-header-md font-bold text-white">Hooks/</h3>
+                            <p class="text-slate-400 readable-text">Business logic layers. State machines, event bindings, and raw handlers.</p>
+                        </div>
+                        <div class="p-6 bg-brand-card border border-brand-border rounded-xl space-y-3">
+                            <div class="text-2xl">🌐</div>
+                            <h3 class="readable-header-md font-bold text-white">Context/</h3>
+                            <p class="text-slate-400 readable-text">Low-frequency shared global settings (Themes, User Sessions, Locales).</p>
+                        </div>
+                        <div class="p-6 bg-brand-card border border-brand-border rounded-xl space-y-3">
+                            <div class="text-2xl">📦</div>
+                            <h3 class="readable-header-md font-bold text-white">Services/</h3>
+                            <p class="text-slate-400 readable-text">API communication layers, network configurations, and routes.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 15: Code Challenge Game -->
+                <div class="slide-element hidden" id="slide-15">
+                    <h2 class="readable-header-lg font-extrabold text-white mb-6 flex items-center gap-4">
+                        <i class="fa-solid fa-terminal text-brand-rose animate-pulse"></i> Code Roast: Spot the Bugs!
                     </h2>
 
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         <div class="space-y-4">
-                            <pre class="bg-brand-code border border-brand-border rounded-xl p-4 text-[10px] font-mono text-slate-400 overflow-x-auto leading-relaxed">
-<span class="text-slate-500">// Spot the architectural bugs in this code snippet:</span>
+                            <pre class="bg-brand-code border border-brand-border rounded-xl p-5 font-mono text-slate-400 overflow-x-auto leading-relaxed readable-code">
+<span class="text-slate-500">// Can you find the bugs in this component?</span>
 <span class="text-slate-400">export function </span><span class="text-brand-indigo">MetricsDashboard</span><span class="text-slate-400">() {</span>
   <span class="text-slate-400">const [metrics, setMetrics] = </span><span class="text-brand-indigo">useState</span><span class="text-slate-400">([]);</span>
 
@@ -640,20 +703,20 @@ const [phone, setPhone] = useState("");</pre>
 <span class="text-slate-400">}</span></pre>
                         </div>
 
-                        <div class="space-y-4 text-xs">
-                            <h3 class="font-bold text-white text-sm uppercase font-mono tracking-wider">Reviewing the Code Roast Results</h3>
-                            <div class="space-y-3">
-                                <div class="p-3 bg-brand-card border-l-4 border-brand-rose rounded-r-xl border-y border-r border-brand-border">
-                                    <strong class="text-brand-rose">1. Direct Array Mutation</strong>
-                                    <p class="text-[11px] text-slate-400 mt-1">Calling <code class="text-brand-cyan">metrics.push()</code> modifies the array in-place, leaving the memory pointer identical. React ignores the reference change and skips the re-render pass.</p>
+                        <div class="space-y-4">
+                            <h3 class="readable-header-md font-bold text-white uppercase font-mono tracking-wider">Bug Explanations:</h3>
+                            <div class="space-y-4">
+                                <div class="p-4 bg-brand-card border-l-4 border-brand-rose rounded-r-xl border-y border-r border-brand-border">
+                                    <strong class="text-brand-rose readable-header-md block mb-1">1. Direct Array Mutation</strong>
+                                    <p class="readable-text text-slate-400"><code class="text-brand-cyan">metrics.push()</code> changes the array values but leaves the memory address pointer identical. React skips the re-render pass.</p>
                                 </div>
-                                <div class="p-3 bg-brand-card border-l-4 border-brand-rose rounded-r-xl border-y border-r border-brand-border">
-                                    <strong class="text-brand-rose">2. Short-Circuit "0" Render Leak</strong>
-                                    <p class="text-[11px] text-slate-400 mt-1">If the metrics list is empty, <code class="text-brand-cyan">metrics.length</code> evaluates to 0, rendering a literal '0' on screen. Use <code class="text-brand-cyan">metrics.length &gt; 0</code> instead.</p>
+                                <div class="p-4 bg-brand-card border-l-4 border-brand-rose rounded-r-xl border-y border-r border-brand-border">
+                                    <strong class="text-brand-rose readable-header-md block mb-1">2. Falsy Zero Render Leak</strong>
+                                    <p class="readable-text text-slate-400">If the array is empty, <code class="text-brand-cyan">metrics.length</code> returns 0, rendering a literal '0' on screen. Use <code class="text-brand-cyan">metrics.length &gt; 0</code> instead.</p>
                                 </div>
-                                <div class="p-3 bg-brand-card border-l-4 border-brand-rose rounded-r-xl border-y border-r border-brand-border">
-                                    <strong class="text-brand-rose">3. Shifting Index as Key</strong>
-                                    <p class="text-[11px] text-slate-400 mt-1">Using the loop's <code class="text-brand-cyan">idx</code> index value as a key causes rendering and layout issues when items are added or deleted. Always map keys to unique database records (<code class="text-brand-cyan">m.id</code>).</p>
+                                <div class="p-4 bg-brand-card border-l-4 border-brand-rose rounded-r-xl border-y border-r border-brand-border">
+                                    <strong class="text-brand-rose readable-header-md block mb-1">3. Loop Index as Key</strong>
+                                    <p class="readable-text text-slate-400">Using the loop's <code class="text-brand-cyan">idx</code> index as a key causes rendering and layout issues when items are added or deleted. Always map keys to unique database records (<code class="text-brand-cyan">m.id</code>).</p>
                                 </div>
                             </div>
                         </div>
@@ -666,20 +729,21 @@ const [phone, setPhone] = useState("");</pre>
 
     <script>
         const slideDefinitions = [
-            { id: 1, title: 'Welcome & Introduction', category: 'PART 1: THINKING IN REACT' },
-            { id: 2, title: 'Curriculum Roadmap Stations', category: 'PART 1: THINKING IN REACT' },
+            { id: 1, title: 'Welcome & Overview', category: 'PART 1: THINKING IN REACT' },
+            { id: 2, title: 'Core Training Stations', category: 'PART 1: THINKING IN REACT' },
             { id: 3, title: 'UI Anatomy & JSX Compilation', category: 'PART 1: THINKING IN REACT' },
-            { id: 4, title: 'Lists, Keys & The Falsy Zero', category: 'PART 1: THINKING IN REACT' },
+            { id: 4, title: 'Lists, Keys & Falsy Zeros', category: 'PART 1: THINKING IN REACT' },
             { id: 5, title: 'Immutability & Reference Audits', category: 'PART 1: THINKING IN REACT' },
             { id: 6, title: 'Controlled vs Uncontrolled Forms', category: 'PART 1: THINKING IN REACT' },
-            { id: 7, title: 'Unified State Form Scaling', category: 'PART 1: THINKING IN REACT' },
+            { id: 7, title: 'Scaling Multi-Input Forms', category: 'PART 1: THINKING IN REACT' },
             { id: 8, title: 'On-The-Fly Calculated Validations', category: 'PART 1: THINKING IN REACT' },
             { id: 9, title: 'Client-Side Routing Mechanics', category: 'PART 2: REACT IN PRACTICE' },
             { id: 10, title: 'The Great Link Debate: a vs Link', category: 'PART 2: REACT IN PRACTICE' },
-            { id: 11, title: 'Side Effects & API Synchronization', category: 'PART 2: REACT IN PRACTICE' },
+            { id: 11, title: 'Side Effects & API Sync', category: 'PART 2: REACT IN PRACTICE' },
             { id: 12, title: 'Context API & Render Boundaries', category: 'PART 2: REACT IN PRACTICE' },
-            { id: 13, title: 'Scaling Folder Architectures', category: 'PART 2: REACT IN PRACTICE' },
-            { id: 14, title: 'Interactive Challenge: Find the Bug!', category: 'PART 2: REACT IN PRACTICE' }
+            { id: 13, title: 'Project Scaffolding Styles', category: 'PART 2: REACT IN PRACTICE' },
+            { id: 14, title: 'Production Architecture Standards', category: 'PART 2: REACT IN PRACTICE' },
+            { id: 15, title: 'Interactive Challenge: Find the Bug!', category: 'PART 2: REACT IN PRACTICE' }
         ];
 
         let activeIndex = 0;
@@ -689,14 +753,14 @@ const [phone, setPhone] = useState("");</pre>
             nav.innerHTML = '';
             slideDefinitions.forEach((slide, idx) => {
                 const btn = document.createElement('button');
-                btn.className = `w-full text-left px-4 py-3 rounded-xl text-xs font-semibold flex items-center gap-3 transition-all ${
+                btn.className = `w-full text-left px-4 py-2 rounded-xl text-xs font-semibold flex items-center gap-3 transition-all ${
                     idx === activeIndex 
                         ? 'active-slide-tab text-white' 
                         : 'text-slate-400 hover:text-white hover:bg-brand-card/50'
                 }`;
                 btn.onclick = () => jumpToSlide(idx);
                 btn.innerHTML = `
-                    <span class="w-5 h-5 rounded-md bg-slate-800 flex items-center justify-center font-mono font-bold text-[10px] text-slate-400">
+                    <span class="w-6 h-6 rounded-md bg-slate-800 flex items-center justify-center font-mono font-bold text-xs text-slate-400">
                         ${String(slide.id).padStart(2, '0')}
                     </span>
                     <span class="truncate">${slide.title}</span>
@@ -718,9 +782,9 @@ const [phone, setPhone] = useState("");</pre>
             const badge = document.getElementById('slide-category-badge');
             badge.innerText = slideDefinitions[activeIndex].category;
             if (slideDefinitions[activeIndex].category.includes('PRACTICE')) {
-                badge.className = "text-[10px] font-mono uppercase tracking-widest font-bold bg-brand-cyan/15 text-brand-cyan px-3 py-1 rounded-full";
+                badge.className = "text-xs font-mono uppercase tracking-widest font-bold bg-brand-cyan/15 text-brand-cyan px-4 py-1.5 rounded-full border border-brand-cyan/20";
             } else {
-                badge.className = "text-[10px] font-mono uppercase tracking-widest font-bold bg-brand-indigo/15 text-brand-indigo px-3 py-1 rounded-full";
+                badge.className = "text-xs font-mono uppercase tracking-widest font-bold bg-brand-indigo/15 text-brand-indigo px-4 py-1.5 rounded-full border border-brand-indigo/20";
             }
 
             renderSidebar();
